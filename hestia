@@ -1,0 +1,223 @@
+{
+    "columns": 6,
+    "tiles": [
+        {
+            "params": {
+                "projectId": 14,
+                "ref": "master"
+            },
+            "type": "GITLAB-PIPELINE"
+        },
+        {
+            "params": {
+                "projectId": 65,
+                "ref": "master"
+            },
+            "type": "GITLAB-PIPELINE"
+        },
+        {
+            "params": {
+                "projectId": 13,
+                "ref": "master"
+            },
+            "type": "GITLAB-PIPELINE"
+        },
+        {
+            "params": {
+                "projectId": 48,
+                "ref": "master"
+            },
+            "type": "GITLAB-PIPELINE"
+        },
+        {
+            "params": {
+                "projectId": 258,
+                "ref": "master"
+            },
+            "type": "GITLAB-PIPELINE"
+        },
+        {
+            "params": {
+                "projectId": 38,
+                "ref": "master"
+            },
+            "type": "GITLAB-PIPELINE"
+        },
+        {
+            "params": {
+                "projectId": 37,
+                "ref": "master"
+            },
+            "type": "GITLAB-PIPELINE"
+        },
+        {
+            "params": {
+                "projectId": 50,
+                "ref": "master"
+            },
+            "type": "GITLAB-PIPELINE"
+        },
+        {
+            "params": {
+                "projectId": 46,
+                "ref": "master"
+            },
+            "type": "GITLAB-PIPELINE"
+        },
+        {
+            "params": {
+                "projectId": 33,
+                "ref": "master"
+            },
+            "type": "GITLAB-PIPELINE"
+        },
+        {
+            "params": {
+                "projectId": 64,
+                "ref": "master"
+            },
+            "type": "GITLAB-PIPELINE"
+        },
+        {
+            "params": {
+                "projectId": 52,
+                "ref": "master"
+            },
+            "type": "GITLAB-PIPELINE"
+        },
+        {
+            "params": {
+                "projectId": 53,
+                "ref": "master"
+            },
+            "type": "GITLAB-PIPELINE"
+        },
+        {
+            "params": {
+                "projectId": 66,
+                "ref": "master"
+            },
+            "type": "GITLAB-PIPELINE"
+        },
+        {
+            "params": {
+                "projectId": 62,
+                "ref": "master"
+            },
+            "type": "GITLAB-PIPELINE"
+        },
+        {
+            "params": {
+                "projectId": 47,
+                "ref": "master"
+            },
+            "type": "GITLAB-PIPELINE"
+        },
+        {
+            "params": {
+                "projectId": 59,
+                "ref": "master"
+            },
+            "type": "GITLAB-PIPELINE"
+        },
+        {
+            "params": {
+                "projectId": 90,
+                "ref": "master"
+            },
+            "type": "GITLAB-PIPELINE"
+        },
+        {
+            "params": {
+                "projectId": 35,
+                "ref": "master"
+            },
+            "type": "GITLAB-PIPELINE"
+        },
+        {
+            "params": {
+                "projectId": 74,
+                "ref": "master"
+            },
+            "type": "GITLAB-PIPELINE"
+        },
+        {
+            "params": {
+                "projectId": 69,
+                "ref": "master"
+            },
+            "type": "GITLAB-PIPELINE"
+        },
+        {
+            "params": {
+                "projectId": 73,
+                "ref": "master"
+            },
+            "type": "GITLAB-PIPELINE"
+        },
+        {
+            "params": {
+                "projectId": 12,
+                "ref": "master"
+            },
+            "type": "GITLAB-PIPELINE"
+        },
+        {
+            "params": {
+                "projectId": 82,
+                "ref": "master"
+            },
+            "type": "GITLAB-PIPELINE"
+        },
+        {
+            "params": {
+                "projectId": 85,
+                "ref": "master"
+            },
+            "type": "GITLAB-PIPELINE"
+        },
+        {
+            "params": {
+                "projectId": 67,
+                "ref": "master"
+            },
+            "type": "GITLAB-PIPELINE"
+        },
+        {
+            "params": {
+                "projectId": 139,
+                "ref": "master"
+            },
+            "type": "GITLAB-PIPELINE"
+        },
+        {
+            "params": {
+                "projectId": 103,
+                "ref": "master"
+            },
+            "type": "GITLAB-PIPELINE"
+        },
+        {
+            "params": {
+                "projectId": 122,
+                "ref": "master"
+            },
+            "type": "GITLAB-PIPELINE"
+        },
+        {
+            "params": {
+                "projectId": 271,
+                "ref": "master"
+            },
+            "type": "GITLAB-PIPELINE"
+        },
+        {
+            "params": {
+                "projectId": 106,
+                "ref": "master"
+            },
+            "type": "GITLAB-PIPELINE"
+        }
+    ],
+    "version": "2.0"
+}

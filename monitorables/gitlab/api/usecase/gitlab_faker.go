@@ -62,6 +62,8 @@ func (gu *gitlabUsecase) Pipeline(params *models.PipelineParams) (tile *coreMode
 	tile.Build.Branch = pointer.ToString(git.HumanizeBranch(params.Ref))
 	tile.Build.PreviousStatus = nonempty.Struct(params.PreviousStatus, coreModels.SuccessStatus).(coreModels.TileStatus)
 
+	tile.Build.Url = fmt.Sprintf("https://gitlab.exemple.com/%d/-/pipelines", *params.ProjectID)
+
 	// Author
 	if tile.Status == coreModels.FailedStatus {
 		tile.Build.Author = &coreModels.Author{}

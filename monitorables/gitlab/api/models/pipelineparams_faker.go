@@ -20,6 +20,8 @@ type (
 		AuthorName      string `json:"authorName" query:"authorName"`
 		AuthorAvatarURL string `json:"authorAvatarURL" query:"authorAvatarURL"`
 
+		Url string `json:"url" query:"url"`
+
 		Status            coreModels.TileStatus `json:"status" query:"status"`
 		PreviousStatus    coreModels.TileStatus `json:"previousStatus" query:"previousStatus"`
 		StartedAt         time.Time             `json:"startedAt" query:"startedAt"`

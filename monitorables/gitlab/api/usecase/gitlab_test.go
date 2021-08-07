@@ -148,6 +148,7 @@ func TestUsecase_Pipeline_Success(t *testing.T) {
 
 	pipeline := &models.Pipeline{
 		ID:         10,
+		Url:        "https://gitlab.exemple.com/project/-/pipelines/10",
 		Branch:     "master",
 		Status:     "success",
 		StartedAt:  &startedAt,
@@ -161,6 +162,7 @@ func TestUsecase_Pipeline_Success(t *testing.T) {
 	expected.Build.PreviousStatus = coreModels.UnknownStatus
 	expected.Build.StartedAt = pointer.ToTime(startedAt)
 	expected.Build.FinishedAt = pointer.ToTime(finishedAt)
+	expected.Build.Url = &pipeline.Url
 
 	testPipeline(t, pipeline, expected)
 }
@@ -172,6 +174,7 @@ func TestUsecase_Pipeline_Failed(t *testing.T) {
 
 	pipeline := &models.Pipeline{
 		ID:     10,
+		Url:    "https://gitlab.exemple.com/project/-/pipelines/10",
 		Branch: "master",
 		Author: coreModels.Author{
 			Name:      "author",
@@ -189,6 +192,7 @@ func TestUsecase_Pipeline_Failed(t *testing.T) {
 	expected.Build.PreviousStatus = coreModels.UnknownStatus
 	expected.Build.StartedAt = pointer.ToTime(startedAt)
 	expected.Build.FinishedAt = pointer.ToTime(finishedAt)
+	expected.Build.Url = &pipeline.Url
 	expected.Build.Author = &coreModels.Author{
 		Name:      "author",
 		AvatarURL: "author.exemple.com",
@@ -203,6 +207,7 @@ func TestUsecase_Pipeline_Running(t *testing.T) {
 
 	pipeline := &models.Pipeline{
 		ID:        10,
+		Url:       "https://gitlab.exemple.com/project/-/pipelines/10",
 		Branch:    "master",
 		Status:    "running",
 		StartedAt: &startedAt,
@@ -216,6 +221,7 @@ func TestUsecase_Pipeline_Running(t *testing.T) {
 	expected.Build.StartedAt = pointer.ToTime(startedAt)
 	expected.Build.Duration = pointer.ToInt64(30)
 	expected.Build.EstimatedDuration = pointer.ToInt64(0)
+	expected.Build.Url = &pipeline.Url
 
 	testPipeline(t, pipeline, expected)
 }
@@ -226,6 +232,7 @@ func TestUsecase_Pipeline_Queued(t *testing.T) {
 
 	pipeline := &models.Pipeline{
 		ID:        10,
+		Url:       "https://gitlab.exemple.com/project/-/pipelines/10",
 		Branch:    "master",
 		Status:    "pending",
 		StartedAt: &startedAt,
@@ -237,6 +244,7 @@ func TestUsecase_Pipeline_Queued(t *testing.T) {
 	expected.Status = coreModels.QueuedStatus
 	expected.Build.PreviousStatus = coreModels.UnknownStatus
 	expected.Build.StartedAt = pointer.ToTime(startedAt)
+	expected.Build.Url = &pipeline.Url
 
 	testPipeline(t, pipeline, expected)
 }
@@ -269,6 +277,7 @@ func TestUsecase_Pipeline_WithPrevious(t *testing.T) {
 
 	pipeline := &models.Pipeline{
 		ID:         10,
+		Url:        "https://gitlab.exemple.com/project/-/pipelines/10",
 		Branch:     "master",
 		Status:     "success",
 		StartedAt:  &startedAt,
@@ -289,6 +298,7 @@ func TestUsecase_Pipeline_WithPrevious(t *testing.T) {
 	expected.Label = "project"
 	expected.Build.Branch = pointer.ToString("master")
 	expected.Status = coreModels.SuccessStatus
+	expected.Build.Url = &pipeline.Url
 	expected.Build.PreviousStatus = coreModels.UnknownStatus
 	expected.Build.StartedAt = pointer.ToTime(startedAt)
 	expected.Build.FinishedAt = pointer.ToTime(finishedAt)
@@ -303,6 +313,7 @@ func TestUsecase_Pipeline_WithPrevious(t *testing.T) {
 	pipeline.FinishedAt = nil
 
 	expected.Status = coreModels.RunningStatus
+	expected.Build.Url = &pipeline.Url
 	expected.Build.PreviousStatus = coreModels.SuccessStatus
 	expected.Build.Duration = pointer.ToInt64(30)
 	expected.Build.EstimatedDuration = pointer.ToInt64(15)
@@ -469,6 +480,7 @@ func TestUsecase_MergeRequest_Success(t *testing.T) {
 
 	pipeline := &models.Pipeline{
 		ID:         10,
+		Url:        "https://gitlab.exemple.com/project/-/pipelines/10",
 		Branch:     "master",
 		Status:     "failed",
 		StartedAt:  &startedAt,
@@ -504,6 +516,7 @@ func TestUsecase_MergeRequest_Success(t *testing.T) {
 	expected.Build.PreviousStatus = coreModels.UnknownStatus
 	expected.Build.StartedAt = pointer.ToTime(startedAt)
 	expected.Build.FinishedAt = pointer.ToTime(finishedAt)
+	expected.Build.Url = &pipeline.Url
 
 	tile, err := gu.MergeRequest(&models.MergeRequestParams{ProjectID: pointer.ToInt(10), ID: pointer.ToInt(10)})
 	if assert.NoError(t, err) {

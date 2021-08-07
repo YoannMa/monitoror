@@ -1,5 +1,5 @@
 <template>
-  <div class="c-monitoror-tile" :class="classes" :style="styles">
+  <a class="c-monitoror-tile" :class="classes" :style="styles" :href="url" target="_blank" rel="noopener noreferrer">
     <div class="c-monitoror-tile--content" v-if="!isEmpty">
       <div class="c-monitoror-tile--label">
         <template v-if="mergeRequestLabelPrefix">{{ mergeRequestLabelPrefix }}</template>
@@ -58,7 +58,7 @@
         </div>
       </template>
     </div>
-  </div>
+  </a>
 </template>
 
 <script lang="ts">
@@ -106,6 +106,7 @@ export default defineComponent({
 
       // build
       build,
+      url,
       branch,
       mergeRequest,
       mergeRequestLabelPrefix,
@@ -225,6 +226,7 @@ export default defineComponent({
       build,
       buildId,
       branch,
+      url,
       mergeRequest,
       mergeRequestLabelPrefix,
       progressTime,
@@ -246,6 +248,7 @@ export default defineComponent({
   $border-radius: 4px;
 
   .c-monitoror-tile {
+    display: block;
     --tile-background: var(--color-unknown);
     --tile-padding: 15px;
 

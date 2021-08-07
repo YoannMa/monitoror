@@ -8,6 +8,7 @@ import (
 
 type Pipeline struct {
 	ID         int
+	Url        string
 	Branch     string
 	Author     coreModels.Author
 	Status     string

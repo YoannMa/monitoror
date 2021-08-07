@@ -5,6 +5,7 @@ import TileMergeRequest from '@/types/tileMergeRequest'
 type TileBuild = {
   previousStatus?: TileStatus,
   id?: string,
+  url?: string,
   branch?: string,
   mergeRequest?: TileMergeRequest,
   author?: TileAuthor,

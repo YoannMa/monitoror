@@ -165,6 +165,9 @@ func (gu *gitlabUsecase) MergeRequest(params *models.MergeRequestParams) (*coreM
 func (gu *gitlabUsecase) computePipeline(params interface{}, tile *coreModels.Tile, pipeline *models.Pipeline) {
 	tile.Status = parseStatus(pipeline.Status)
 
+	// Set Build URL
+	tile.Build.Url = &pipeline.Url
+
 	// Set Previous Status
 	strPipelineID := fmt.Sprintf("%d", pipeline.ID)
 	previousStatus := gu.buildsCache.GetPreviousStatus(params, strPipelineID)
@@ -275,6 +278,10 @@ func parseStatus(status string) coreModels.TileStatus {
 	case "running":
 		return coreModels.RunningStatus
 	case "pending":
+		return coreModels.QueuedStatus
+	case "waiting_for_resource":
+		return coreModels.QueuedStatus
+	case "scheduled":
 		return coreModels.QueuedStatus
 	case "success":
 		return coreModels.SuccessStatus

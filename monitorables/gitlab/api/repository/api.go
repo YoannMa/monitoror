@@ -97,6 +97,7 @@ func (gr *gitlabRepository) GetPipeline(projectID, pipelineID int) (*models.Pipe
 		Status:     gitlabPipeline.Status,
 		StartedAt:  gitlabPipeline.StartedAt,
 		FinishedAt: gitlabPipeline.FinishedAt,
+		Url:        gitlabPipeline.WebURL,
 	}
 
 	if gitlabPipeline.User != nil {
@@ -124,7 +125,9 @@ func (gr *gitlabRepository) GetPipelines(projectID int, ref string) ([]int, erro
 	}
 
 	for _, pipeline := range gitlabPipelines {
-		ids = append(ids, pipeline.ID)
+		if pipeline.Status != string(gitlab.Skipped) {
+			ids = append(ids, pipeline.ID)
+		}
 	}
 
 	return ids, nil

@@ -7,6 +7,7 @@ type (
 		PreviousStatus TileStatus `json:"previousStatus,omitempty"`
 
 		ID           *string           `json:"id,omitempty"`
+		Url          *string           `json:"url,omitempty"`
 		Branch       *string           `json:"branch,omitempty"`
 		MergeRequest *TileMergeRequest `json:"mergeRequest,omitempty"`
 		Author       *Author           `json:"author,omitempty"`

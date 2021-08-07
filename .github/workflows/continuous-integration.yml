@@ -195,6 +195,9 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/')
     needs: [build]
     runs-on: ubuntu-latest
+    env:
+      DOCKERHUB_REPOSITORY: ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}
+      GHCR_REPOSITORY: ghcr.io/${{ github.repository }}
     steps:
       - uses: actions/checkout@v1
         with:
@@ -213,36 +216,69 @@ jobs:
         with:
           name: binaries
 
-      - uses: actions-hub/docker/login@master
+      - name: Login to DockerHub Container Registry
+        uses: actions-hub/docker/login@master
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Login to GitHub Container Registry
+        uses: actions-hub/docker/login@master
+        env:
+          DOCKER_REGISTRY_URL: ghcr.io
+          DOCKER_USERNAME: ${{ github.repository_owner }}
+          DOCKER_PASSWORD: ${{ secrets.CR_PAT }}
 
       - name: Build Images
         run: |
           # Set MB_ENVIRONMENT
           if [[ $GITHUB_REF == refs/tags/* ]]; then export MB_ENVIRONMENT=production; fi
           make package-docker
-          docker tag ${GITHUB_REPOSITORY}:${{ steps.init.outputs.VERSION }} ${GITHUB_REPOSITORY}:${{ steps.init.outputs.MINOR_VERSION }}
-          docker tag ${GITHUB_REPOSITORY}:${{ steps.init.outputs.VERSION }} ${GITHUB_REPOSITORY}:${{ steps.init.outputs.MAJOR_VERSION }}
-          docker tag ${GITHUB_REPOSITORY}:${{ steps.init.outputs.VERSION }} ${GITHUB_REPOSITORY}:latest
+          docker tag monitoror/monitoror:${{ steps.init.outputs.VERSION }} ${DOCKERHUB_REPOSITORY}:${{ steps.init.outputs.VERSION }}
+          docker tag monitoror/monitoror:${{ steps.init.outputs.VERSION }} ${DOCKERHUB_REPOSITORY}:${{ steps.init.outputs.MINOR_VERSION }}
+          docker tag monitoror/monitoror:${{ steps.init.outputs.VERSION }} ${DOCKERHUB_REPOSITORY}:${{ steps.init.outputs.MAJOR_VERSION }}
+          docker tag monitoror/monitoror:${{ steps.init.outputs.VERSION }} ${DOCKERHUB_REPOSITORY}:latest
+          docker tag monitoror/monitoror:${{ steps.init.outputs.VERSION }} ${GHCR_REPOSITORY}:${{ steps.init.outputs.VERSION }}
+          docker tag monitoror/monitoror:${{ steps.init.outputs.VERSION }} ${GHCR_REPOSITORY}:${{ steps.init.outputs.MINOR_VERSION }}
+          docker tag monitoror/monitoror:${{ steps.init.outputs.VERSION }} ${GHCR_REPOSITORY}:${{ steps.init.outputs.MAJOR_VERSION }}
+          docker tag monitoror/monitoror:${{ steps.init.outputs.VERSION }} ${GHCR_REPOSITORY}:latest
 
       - name: Push to docker hub [X.Y.Z]
         uses: actions-hub/docker@master
         with:
-          args: push ${GITHUB_REPOSITORY}:${{ steps.init.outputs.VERSION }}
+          args: push ${DOCKERHUB_REPOSITORY}:${{ steps.init.outputs.VERSION }}
 
       - name: Push to docker hub [X.Y]
         uses: actions-hub/docker@master
         with:
-          args: push ${GITHUB_REPOSITORY}:${{ steps.init.outputs.MINOR_VERSION }}
+          args: push ${DOCKERHUB_REPOSITORY}:${{ steps.init.outputs.MINOR_VERSION }}
 
       - name: Push to docker hub [X]
         uses: actions-hub/docker@master
         with:
-          args: push ${GITHUB_REPOSITORY}:${{ steps.init.outputs.MAJOR_VERSION }}
+          args: push ${DOCKERHUB_REPOSITORY}:${{ steps.init.outputs.MAJOR_VERSION }}
 
       - name: Push to docker hub [latest]
         uses: actions-hub/docker@master
         with:
-          args: push ${GITHUB_REPOSITORY}:latest
+          args: push ${DOCKERHUB_REPOSITORY}:latest
+
+      - name: Push to Github Container Registry [X.Y.Z]
+        uses: actions-hub/docker@master
+        with:
+          args: push ${GHCR_REPOSITORY}:${{ steps.init.outputs.VERSION }}
+
+      - name: Push to Github Container Registry [X.Y]
+        uses: actions-hub/docker@master
+        with:
+          args: push ${GHCR_REPOSITORY}:${{ steps.init.outputs.MINOR_VERSION }}
+
+      - name: Push to Github Container Registry [X]
+        uses: actions-hub/docker@master
+        with:
+          args: push ${GHCR_REPOSITORY}:${{ steps.init.outputs.MAJOR_VERSION }}
+
+      - name: Push to Github Container Registry [latest]
+        uses: actions-hub/docker@master
+        with:
+          args: push ${GHCR_REPOSITORY}:latest

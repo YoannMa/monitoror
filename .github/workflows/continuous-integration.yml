@@ -205,10 +205,6 @@ jobs:
         run: |
           VERSION=$(cat VERSION)
           echo ::set-output name=VERSION::$VERSION
-          echo ::set-output name=MINOR_VERSION::$(echo $VERSION | cut -d "." -f 1,2)
-          echo ::set-output name=MAJOR_VERSION::$(echo $VERSION | cut -d "." -f 1)
-          echo ::set-output name=DOCKERHUB_REPOSITORY::${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}
-          echo ::set-output name=GHCR_REPOSITORY::ghcr.io/${{ github.repository }}
 
       - uses: actions/download-artifact@v1
         with:
@@ -230,18 +226,22 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }},ghcr.io/${{ github.repository }}
+          tags: |
+            type=ref,event=branch
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
           context: .
           file: ./Dockerfile
           push: true
-          tags: |
-            ${{ steps.init.outputs.DOCKERHUB_REPOSITORY }}:${{ steps.init.outputs.VERSION }}
-            ${{ steps.init.outputs.DOCKERHUB_REPOSITORY }}:${{ steps.init.outputs.MINOR_VERSION }}
-            ${{ steps.init.outputs.DOCKERHUB_REPOSITORY }}:${{ steps.init.outputs.MAJOR_VERSION }}
-            ${{ steps.init.outputs.DOCKERHUB_REPOSITORY }}:latest
-            ${{ steps.init.outputs.GHCR_REPOSITORY }}:${{ steps.init.outputs.VERSION }}
-            ${{ steps.init.outputs.GHCR_REPOSITORY }}:${{ steps.init.outputs.MINOR_VERSION }}
-            ${{ steps.init.outputs.GHCR_REPOSITORY }}:${{ steps.init.outputs.MAJOR_VERSION }}
-            ${{ steps.init.outputs.GHCR_REPOSITORY }}:latest
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
